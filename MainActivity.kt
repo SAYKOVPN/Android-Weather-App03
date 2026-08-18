@@ -3,13 +3,9 @@ package com.example.weatherapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,13 +16,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            WeatherScreen()
+            WeatherApp()
         }
     }
 }
 
 @Composable
-fun WeatherScreen() {
+fun WeatherApp() {
+
+    var city by remember { mutableStateOf("Душанбе") }
+    var temperature by remember { mutableStateOf("29°C") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,20 +34,40 @@ fun WeatherScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         Text(
             text = "🌤️ Погода",
             style = MaterialTheme.typography.headlineLarge
         )
 
-        Text(
-            text = "Добро пожаловать!",
-            modifier = Modifier.padding(top = 16.dp),
-            style = MaterialTheme.typography.bodyLarge
-        )
+        Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "Скоро здесь появится прогноз погоды.",
-            modifier = Modifier.padding(top = 8.dp)
+            text = city,
+            style = MaterialTheme.typography.headlineMedium
         )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = temperature,
+            style = MaterialTheme.typography.displayLarge
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text("☀️ Ясно")
+        Text("💧 Влажность: 40%")
+        Text("💨 Ветер: 12 км/ч")
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Button(
+            onClick = {
+                temperature = "30°C"
+            }
+        ) {
+            Text("Обновить")
+        }
     }
 }
